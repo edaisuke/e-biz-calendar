@@ -1,0 +1,344 @@
+.ebc-calendar {
+    max-width: 720px;
+    margin: 24px auto;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.ebc-calendar-header {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.ebc-calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    background: #fff;
+}
+
+.ebc-calendar-table th,
+.ebc-calendar-table td {
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.ebc-calendar-table th {
+    padding: 10px;
+    background: #f5f5f5;
+    font-weight: 700;
+}
+
+.ebc-calendar-table td {
+    height: 82px;
+    vertical-align: top;
+    padding: 8px;
+    position: relative;
+}
+
+.ebc-calendar-table td.empty {
+    background: #fafafa;
+}
+
+.ebc-calendar-table .sun {
+    color: #d33;
+}
+
+.ebc-calendar-table .sat {
+    color: #2674c8;
+}
+
+.ebc-calendar-table td.closed {
+    background: var(--ebc-closed-bg, #fff0f0);
+    color: var(--ebc-closed-text, #d33);
+}
+
+.ebc-calendar-table .date-number {
+    display: block;
+    font-weight: 700;
+}
+
+.ebc-calendar-table .status {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #d33;
+    color: #fff;
+    font-size: 0.8rem;
+}
+
+.ebc-calendar-wrap {
+    max-width: 720px;
+    margin: 24px auto;
+}
+
+.ebc-calendar-nav {
+    display: grid;
+    grid-template-columns: 30% 40% 30%;
+    column-gap: 0;
+}
+
+.ebc-calendar-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.ebc-calendar-nav-prev {
+    text-align: left;
+}
+.ebc-calendar-nav-next {
+    text-align: right;
+}
+
+.ebc-calendar-prev,
+.ebc-calendar-next {
+    cursor: pointer;
+    color: #111111;
+    border: 1px solid transparent;
+    background: transparent;
+    padding: 8px 14px;
+    border-radius: 4px;
+}
+
+.ebc-calendar-prev:hover,
+.ebc-calendar-next:hover {
+    border: 1px solid transparent;
+    background: transparent;
+    color: #000000;
+    box-shadow: 0;
+}
+
+.ebc-calendar-loading {
+    text-align: center;
+    padding: 8px;
+    color: #666;
+}
+
+.ebc-weekday-settings {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    margin: 12px 0 24px;
+}
+
+.ebc-weekday-settings label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+}
+
+.ebc-admin-day.is-weekly-closed {
+    background: #fff7e6;
+    color: #b45309;
+}
+
+.ebc-calendar-table td.weekly-closed {
+    background: #fff7e6;
+    color: #b45309;
+}
+
+
+
+.ebc-admin-nav {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 20px 0;
+}
+
+.ebc-admin-calendar {
+    width: 100%;
+    max-width: 900px;
+    border-collapse: collapse;
+    table-layout: fixed;
+    background: #fff;
+}
+
+.ebc-admin-calendar th,
+.ebc-admin-calendar td {
+    border: 1px solid #ccd0d4;
+    text-align: center;
+}
+
+.ebc-admin-calendar th {
+    padding: 10px;
+    background: #f6f7f7;
+}
+
+.ebc-admin-calendar td {
+    height: 80px;
+    vertical-align: top;
+    padding: 8px;
+}
+
+.ebc-admin-calendar td.empty {
+    background: #f6f7f7;
+}
+
+.ebc-admin-day {
+    cursor: pointer;
+    position: relative;
+    background: #fff;
+}
+
+.ebc-admin-day:hover {
+    background: #f0f6fc;
+}
+
+.ebc-admin-day.is-closed {
+    background: #fff0f0;
+    color: #d63638;
+    font-weight: 700;
+}
+
+.ebc-admin-day .date-number {
+    display: block;
+    font-size: 16px;
+    line-height: 1;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.ebc-admin-day .closed-label {
+    display: none;
+
+    padding: 2px 10px;
+    border-radius: 999px;
+
+    background: #d63638;
+    color: #fff;
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.ebc-admin-day.is-closed .closed-label {
+    display: inline-block;
+}
+
+.ebc-admin-calendar .sun {
+    color: #d63638;
+}
+
+.ebc-admin-calendar .sat {
+    color: #2271b1;
+}
+
+.ebc-admin-day .open-label {
+    display: none;
+
+    padding: 2px 10px;
+    border-radius: 999px;
+
+    background: #2271b1;
+    color: #fff;
+
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.ebc-admin-day.is-open {
+    background: #eef6ff;
+    color: #2271b1;
+    font-weight: 700;
+}
+
+.ebc-admin-day.is-open .closed-label {
+    display: none;
+}
+
+.ebc-admin-day.is-open .open-label {
+    display: inline-block;
+}
+
+.ebc-admin-day.is-closed .open-label {
+    display: none;
+}
+
+.ebc-calendar-table td.open {
+    background: var(--ebc-open-bg, #eef6ff);
+    color: var(--ebc-open-text, #2271b1);
+}
+
+.ebc-calendar-table .open-status {
+    background: var(--ebc-closed-text, #2271b1);
+    color: #fff;
+}
+
+.ebc-holiday-settings {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 12px 0 24px;
+}
+
+.ebc-admin-day.is-holiday,
+.ebc-calendar-table td.holiday {
+    color: #d63638;
+}
+
+.ebc-admin-day .holiday-label,
+.ebc-calendar-table .holiday-name {
+    display: block;
+    margin-top: 4px;
+    font-size: 11px;
+    line-height: 1.3;
+    color: #d63638;
+}
+
+.ebc-admin-day.is-holiday.is-open {
+    background: #eef6ff;
+    color: #2271b1;
+}
+
+.ebc-admin-day.is-holiday.is-open .holiday-label {
+    color: #2271b1;
+}
+
+.ebc-calendar-table td.holiday.open {
+    background: #eef6ff;
+    color: #2271b1;
+}
+
+.ebc-calendar-table td.holiday.open .holiday-name {
+    color: #2271b1;
+}
+
+
+.ebc-event {
+    background: var(--ebc-event-bg, #2271b1);
+    color: var(--ebc-event-text, #fff);
+}
+
+.ebc-event-editor-settings {
+    margin: 12px 0 24px;
+}
+
+.ebc-event-editor-settings label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+}
+
+.ebc-calendar-table .ebc-event {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+}
+
+.ebc-calendar-table .ebc-event .ebc-event-period {
+    text-decoration: none;
+}
