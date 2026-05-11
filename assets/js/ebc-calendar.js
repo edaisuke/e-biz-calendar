@@ -89,7 +89,75 @@
 
                 loadCalendar($wrap, result.year, result.month);
             });
+
+            $wrap.on('click', '.ebc-event', function (e) {
+                e.preventDefault();
+
+                const eventId = $(this).data('event-id');
+
+                if (!eventId) {
+                    window.location.href = $(this).attr('href');
+                    return;
+                }
+
+                openEventModal($wrap, eventId);
+            });
+
+            $wrap.on('click', '.ebc-event-modal-close, .ebc-event-modal-backdrop', function () {
+                closeEventModal($wrap);
+            });
         });
     });
+
+    function openEventModal($wrap, eventId) {
+        const $modal = $wrap.find('.ebc-event-modal');
+
+        $.ajax({
+            url: EBC_Ajax.ajax_url,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                action: 'ebc_get_event',
+                nonce: EBC_Ajax.nonce,
+                event_id: eventId
+            }
+        })
+        .done(function (response) {
+            if (!response.success) {
+                alert('イベント情報の取得に失敗しました。');
+                return;
+            }
+
+            const event = response.data;
+
+            $modal.find('.ebc-event-modal-title').text(event.title);
+            $modal.find('.ebc-event-modal-content').html(event.content);
+
+            let datesText = '';
+
+            if (event.event_dates && event.event_dates.length > 0) {
+                datesText = event.event_dates.join(' / ');
+            } else if (event.start_date && event.end_date && event.start_date !== event.end_date) {
+                datesText = event.start_date + ' 〜 ' + event.end_date;
+            } else if (event.start_date) {
+                datesText = event.start_date;
+            }
+
+            $modal.find('.ebc-event-modal-dates').text(datesText);
+
+            $modal.addClass('is-open').attr('aria-hidden', 'false');
+            $('body').addClass('ebc-modal-open');
+        })
+        .fail(function () {
+            alert('通信エラーが発生しました。');
+        });
+    }
+
+    function closeEventModal($wrap) {
+        const $modal = $wrap.find('.ebc-event-modal');
+
+        $modal.removeClass('is-open').attr('aria-hidden', 'true');
+        $('body').removeClass('ebc-modal-open');
+    }
 
 })(jQuery);

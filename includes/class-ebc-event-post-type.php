@@ -24,21 +24,24 @@ class EBC_Event_Post_Type
                 'add_new_item' => 'イベントを追加',
                 'edit_item' => 'イベントを編集',
             ],
-            'public' => true,
+            'public' => false,
             'show_ui' => true,
             'show_in_menu' => false,
+            'show_in_rest' => true,
             'menu_icon' => 'dashicons-calendar-alt',
-            'has_archive' => true,
-            'rewrite' => [
-                'slug' => 'events',
-            ],
+
+            'publicly_queryable' => false,
+            'exclude_from_search' => true,
+            'has_archive' => false,
+            'rewrite' => false,
+            'query_var' => false,
+
             'supports' => [
                 'title',
                 'editor',
                 'thumbnail',
                 'excerpt',
             ],
-            'show_in_rest' => true,
         ]);
     }
 

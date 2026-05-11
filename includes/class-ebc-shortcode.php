@@ -12,6 +12,9 @@ class EBC_Shortcode
 
         add_action('wp_ajax_ebc_get_calendar', [$this, 'ajax_get_calendar']);
         add_action('wp_ajax_nopriv_ebc_get_calendar', [$this, 'ajax_get_calendar']);
+
+        add_action('wp_ajax_ebc_get_event', [$this, 'ajax_get_event']);
+        add_action('wp_ajax_nopriv_ebc_get_event', [$this, 'ajax_get_event']);
     }
 
     public function ajax_get_calendar()
@@ -101,7 +104,6 @@ class EBC_Shortcode
                     $events_by_date[$date][] = [
                         'id' => $post->ID,
                         'title' => get_the_title($post),
-                        'url' => get_permalink($post),
                         'excerpt' => get_the_excerpt($post),
                         'start_date' => $date,
                         'end_date' => $date,
@@ -138,7 +140,6 @@ class EBC_Shortcode
                 $events_by_date[$date][] = [
                     'id' => $post->ID,
                     'title' => get_the_title($post),
-                    'url' => get_permalink($post),
                     'excerpt' => get_the_excerpt($post),
                     'start_date' => $start_date,
                     'end_date' => $end_date,
@@ -237,6 +238,24 @@ class EBC_Shortcode
 
             <div class="ebc-calendar-content">
                 <?php echo $this->build_calendar_html($year, $month, $holiday_enabled_override); ?>
+            </div>
+
+            <div class="ebc-event-modal" aria-hidden="true">
+                <div class="ebc-event-modal-backdrop"></div>
+
+                <div class="ebc-event-modal-panel" role="dialog" aria-modal="true">
+                    <button type="button" class="ebc-event-modal-close" aria-label="閉じる">
+                        ×
+                    </button>
+
+                    <div class="ebc-event-modal-body">
+                        <h3 class="ebc-event-modal-title"></h3>
+
+                        <div class="ebc-event-modal-dates"></div>
+
+                        <div class="ebc-event-modal-content"></div>
+                    </div>
+                </div>
             </div>
         </div>
         <?php
@@ -373,7 +392,10 @@ class EBC_Shortcode
                                         $event_classes[] = 'is-end';
                                     }
 
-                                    echo '<a class="' . esc_attr(implode(' ', $event_classes)) . '" href="' . esc_url($event['url']) . '">';
+                                    echo '<a class="' . esc_attr(implode(' ', $event_classes)) . '"
+                                             href="#"
+                                             data-event-id="' . esc_attr($event['id']) . '">';
+                                    // echo '<a class="' . esc_attr(implode(' ', $event_classes)) . '" href="' . esc_url($event['url']) . '">';
 
                                     // echo '<span class="ebc-event-title">' . esc_html($event['title']) . '</span>';
 
@@ -441,5 +463,47 @@ class EBC_Shortcode
         ];
 
         return array_merge($defaults, $colors);
+    }
+
+
+    public function ajax_get_event()
+    {
+        check_ajax_referer('ebc_calendar_nonce', 'nonce');
+
+        $event_id = isset($_POST['event_id']) ? absint($_POST['event_id']) : 0;
+
+        if (!$event_id) {
+            wp_send_json_error([
+                'message' => 'Invalid event ID.',
+            ]);
+        }
+
+        $post = get_post($event_id);
+
+        if (!$post || $post->post_type !== 'ebc_event' || $post->post_status !== 'publish') {
+            wp_send_json_error([
+                'message' => 'Event not found.',
+            ]);
+        }
+
+        $start_date  = get_post_meta($event_id, '_ebc_event_start_date', true);
+        $end_date    = get_post_meta($event_id, '_ebc_event_end_date', true);
+        $event_dates = get_post_meta($event_id, '_ebc_event_dates', true);
+
+        if (!is_array($event_dates)) {
+            $event_dates = [];
+        }
+
+        $content = apply_filters('the_content', $post->post_content);
+
+        wp_send_json_success([
+            'id'            => $event_id,
+            'title'         => get_the_title($post),
+            'content'       => $content,
+            'url'           => get_permalink($post),
+            'start_date'    => $start_date,
+            'end_date'      => $end_date,
+            'event_dates'   => $event_dates,
+        ]);
     }
 }
