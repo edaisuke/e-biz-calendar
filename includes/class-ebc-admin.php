@@ -641,8 +641,53 @@ class EBC_Admin
 
                         renderInputs(closedInputs, closedOptionName, closedDates);
                         renderInputs(openInputs, openOptionName, openDates);
+
+                        ebcMarkSettingsChanged();
                     });
                 });
+            });
+
+            let ebcSettingsChanged = false;
+            
+            function ebcMarkSettingsChanged() {
+                ebcSettingsChanged = true;
+            }
+
+            const ebcForm = document.querySelector('form[action="options.php"]');
+
+            if (ebcForm) {
+                ebcForm.addEventListener('change', ebcMarkSettingsChanged);
+
+                ebcForm.addEventListener('input', ebcMarkSettingsChanged);
+
+                ebcForm.addEventListener('submit', function () {
+                    ebcSettingsChanged = false;
+                });
+            }
+
+            document.querySelectorAll('.ebc-admin-nav a').forEach(function (link) {
+                link.addEventListener('click', function (e) {
+                    if (!ebcSettingsChanged) {
+                        return;
+                    }
+
+                    const ok = window.confirm(
+                        '保存されていない変更があります。\n保存せずに移動してもよろしいですか？'
+                    );
+
+                    if (!ok) {
+                        e.preventDefault();
+                    }
+                });
+            });
+
+            window.addEventListener('beforeunload', function (e) {
+                if (!ebcSettingsChanged) {
+                    return;
+                }
+
+                e.preventDefault();
+                e.returnValue = '';
             });
         </script>
         <?php

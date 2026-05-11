@@ -342,3 +342,79 @@
 .ebc-calendar-table .ebc-event .ebc-event-period {
     text-decoration: none;
 }
+
+
+/* モーダル表示 */
+.ebc-event-modal {
+    display: none;
+}
+
+.ebc-event-modal.is-open {
+    display: block;
+}
+
+.ebc-event-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    background: rgba(0, 0, 0, 0.55);
+}
+
+.ebc-event-modal-panel {
+    position: fixed;
+    z-index: 9999;
+    top: 50%;
+    left: 50%;
+    width: min(92vw, 640px);
+    max-height: 82vh;
+    overflow-y: auto;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+.ebc-event-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    border: none;
+    color: #111;
+    background: transparent;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.ebc-event-modal-title {
+    margin: 0 36px 12px 0;
+    font-size: 1.4rem;
+}
+
+.ebc-event-modal-dates {
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.ebc-event-modal-content {
+    line-height: 1.8;
+}
+
+.ebc-event-modal-link-wrap {
+    margin-top: 20px;
+}
+
+.ebc-event-modal-link {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 6px;
+    background: var(--ebc-event-text, #1d4ed8);
+    color: #fff;
+    text-decoration: none;
+}
+
+.ebc-modal-open {
+    overflow: hidden;
+}
