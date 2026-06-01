@@ -2,7 +2,7 @@
 /**
  * Plugin Name: e-BizCalendar
  * Description: A simple calendar plugin for WordPress.
- * Version: 1.1.1
+ * Version: 1.1.2
  * Author: イー・フロンティア・システムズ
  */
 
@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly.
 }
 
-define( 'EBC_PLUGIN_VERSION', '1.1.1' );
+define( 'EBC_PLUGIN_VERSION', '1.1.2' );
 define( 'EBC_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'EBC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
