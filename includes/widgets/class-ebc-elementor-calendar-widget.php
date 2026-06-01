@@ -42,6 +42,18 @@ class EBC_Elementor_Calendar_Widget extends \Elementor\Widget_Base
         );
 
         $this->add_control(
+            'current_date',
+            [
+                'label' => '現在の年月を表示',
+                'type' => \Elementor\Controls_Manager::SWITCHER,
+                'label_on' => 'はい',
+                'label_off' => 'いいえ',
+                'return_value' => 'yes',
+                'default' => 'yes',
+            ]
+        );
+
+        $this->add_control(
             'year',
             [
                 'label' => '表示年',
@@ -49,6 +61,9 @@ class EBC_Elementor_Calendar_Widget extends \Elementor\Widget_Base
                 'min'  => 2000,
                 'max'  => 2200,
                 'default' => (int) date('Y'),
+                'condition' => [
+                    'current_date' => '',
+                ],
             ]
         );
 
@@ -71,6 +86,9 @@ class EBC_Elementor_Calendar_Widget extends \Elementor\Widget_Base
                     10 => '10月',
                     11 => '11月',
                     12 => '12月',
+                ],
+                'condition' => [
+                    'current_date' => '',
                 ],
             ]
         );
@@ -120,8 +138,9 @@ class EBC_Elementor_Calendar_Widget extends \Elementor\Widget_Base
     {
         $settings = $this->get_settings_for_display();
 
-        $year  = isset($settings['year'])  ? absint($settings['year'])  : (int) date('Y');
-        $month = isset($settings['month']) ? absint($settings['month']) : (int) date('n');
+        $current_date = isset($settings['current_date']) && $settings['current_date'] === 'yes';
+        $year  = $current_date ? (int) date('Y') : (isset($settings['year']) ? absint($settings['year']) : (int) date('Y'));
+        $month = $current_date ? (int) date('n') : (isset($settings['month']) ? absint($settings['month']) : (int) date('n'));
 
         $show_prev = $settings['show_prev'] === 'yes' ? '1' : '0';
         $show_next = $settings['show_next'] === 'yes' ? '1' : '0';
